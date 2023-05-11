@@ -1,0 +1,3 @@
+// database username -pass-  adarsh123
+
+// ATLAS_URI=mongodb+srv://adarsh123:adarsh123@cluster0.yjyxjor.mongodb.net/?retryWrites=true&w=majority
