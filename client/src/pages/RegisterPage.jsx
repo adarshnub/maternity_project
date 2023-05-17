@@ -62,7 +62,7 @@ function RegisterPage() {
     ev.preventDefault();
   
  
-  const response = await fetch('http://localhost:5000/register', {
+  const response = await fetch('http://localhost:5000/users/register', {
       method: 'POST' ,
       body: JSON.stringify({firstName,
                             lastName,
@@ -73,7 +73,7 @@ function RegisterPage() {
                             date}),
       headers: {'Content-Type': 'application/json'},                      
   });
-  if (response.status === 200){
+  if (response.status === "ok"){
     alert('Sign Up successfull');
   }else{
     alert('Sign Up failed. Try again after a few minutes');
@@ -279,7 +279,8 @@ function RegisterPage() {
              {/* <div className="mt-1 "> */}
               <button
                 // onClick={() => handleSubmit()}
-                type="submit"
+                // type="submit"
+                onClick={register}
                 className="border-2 
                 rounded-lg
                 px-5
