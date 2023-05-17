@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.leftContainer label{
+  color: rgb(128, 115, 114) !important;
+  opacity: 0.6;
+  font-size: 25px;
+}
+
+
+ .login-form {
+  max-width: 300px;
+}
+ .login-form-forgot {
+  float: right;
+}
+ .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+ .login-form-button {
+  width: 100%;
+}
