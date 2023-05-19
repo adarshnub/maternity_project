@@ -72,10 +72,23 @@ router.post("/login", async (req, res) => {
     // Compare the password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid username or password" });
+      return res.status(401).json({ message: "Invalid password" });
     }
 
     // Respond with success message
+    const userDoc =  await User.findOne({ identifier })  //find the user
+    if( user && isPasswordValid){
+      //user Logged
+      jwt.sign({ identifier, id: userDoc._id }, secret, {}, (err,token)=>{
+        if(err) throw err;
+        res.cookie("token", token).json({
+          id: userDoc._id,
+          identifier,
+        });
+      });
+    }else{
+      res,status(400).json("Wrong Credentials")
+    }
     return res.status(200).json({ message: "Logged in successfully" });
   } catch (error) {
     console.error("Failed to log in user", error);
