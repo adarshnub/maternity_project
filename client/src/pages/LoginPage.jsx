@@ -1,11 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 
 function LoginPage() {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function login(ev) {
+    ev.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5000/users/login", {
+        method: "POST",
+        body: JSON.stringify({ identifier, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.status === 200) {
+        alert("Logged in successfully");
+      } else {
+        const data = await response.json();
+        setErrorMessage(data.message || "Login failed . Try again");
+      }
+    } catch (error) {
+      console.error("Login failed", error);
+      setErrorMessage("Login failed. Please try again");
+    }
+  }
+
   return (
     <div
       className="registerMainContainer
@@ -44,26 +66,32 @@ function LoginPage() {
             initialValues={{
               remember: true,
             }}
-            onFinish={onFinish}
+            onFinish={login}
           >
-            <h1 
-            className="font-extrabold
+            <h1
+              className="font-extrabold
             text-xl
             py-4"
-            >Login</h1>
+            >
+              Login
+            </h1>
             <hr />
             <Form.Item
-              name="username"
+              name="identifier"
               rules={[
                 {
                   required: true,
-                  message: "Please input your Username!",
+                  message: "Please input your email or phone number!",
                 },
               ]}
             >
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
+                placeholder="email or phone"
+                type="text"
+                id="identifier"
+                value={identifier}
+                onChange={(ev) => setIdentifier(ev.target.value)}
               />
             </Form.Item>
             <Form.Item
@@ -79,20 +107,22 @@ function LoginPage() {
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
+                id="password"
+                value={password}
+                onChange={(ev) => setPassword(ev.target.value)}
               />
             </Form.Item>
             <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
-              <a className="login-form-forgot" href="">
+              <a className="login-form-forgot" href="/">
                 Forgot password
               </a>
             </Form.Item>
-
+            {errorMessage && (
+          <div className="text-red-500 mt-4">{errorMessage}</div>
+        )}  
             <Form.Item>
               <Button
+                onClick={login}
                 type="primary"
                 htmlType="submit"
                 className="login-form-button
@@ -111,6 +141,7 @@ function LoginPage() {
             </Form.Item>
           </Form>
         </div>
+       
         <div
           className="rightContainer w-2/3
           bg-[#FFB984] 

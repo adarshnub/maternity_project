@@ -1,13 +1,6 @@
-// import { DatePicker, Form } from "antd";
 import React, { useRef, useState } from "react";
 
 function RegisterPage() {
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  // function register(ev){
-  //   ev.preventDefault();
-  // }
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,70 +11,29 @@ function RegisterPage() {
   const [date, setDate] = useState("");
   const dateInputRef = useRef(null);
 
-  // const handleInputChange = (e) => {
-  //   const { id, value } = e.target;
-  //   if (id === "firstName") {
-  //     setFirstName(value);
-  //   }
-  //   if (id === "lastName") {
-  //     setLastName(value);
-  //   }
-  //   if (id === "email") {
-  //     setEmail(value);
-  //   }
-  //   if (id === "password") {
-  //     setPassword(value);
-  //   }
-  //   if (id === "confirmPassword") {
-  //     setConfirmPassword(value);
-  //   }
-  //   if (id === "phone") {
-  //     setPhone(value);
-  //   }
-  //   if (id === "date") {
-  //     setDate(value);
-  //   }
-  // };
-
-  // const handleSubmit = () => {
-  //   console.log(
-  //     firstName,
-  //     lastName,
-  //     email,
-  //     password,
-  //     confirmPassword,
-  //     phone,
-  //     date
-  //   );
-  // };
-
-
-
-   //backend connection
-  async function register(ev){
+  //backend connection
+  async function register(ev) {
     ev.preventDefault();
-  
- 
-  const response = await fetch('http://localhost:5000/users/register', {
-      method: 'POST' ,
-      body: JSON.stringify({firstName,
-                            lastName,
-                            email,
-                            password,
-                            confirmPassword,
-                            phone,
-                            date}),
-      headers: {'Content-Type': 'application/json'},                      
-  });
-  if (response.status === "ok"){
-    alert('Sign Up successfull');
-  }else{
-    alert('Sign Up failed. Try again after a few minutes');
+
+    const response = await fetch("http://localhost:5000/users/register", {
+      method: "POST",
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        phone,
+        date,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.status === 201) {
+      alert("Sign Up successfull");
+    } else {
+      alert("Sign Up failed. Try again after a few minutes");
+    }
   }
-
-}
-
-
 
   return (
     <div
@@ -113,10 +65,7 @@ function RegisterPage() {
         bg-white
         h-full"
         >
-          <form 
-          action=""
-          className="rounded-lg"
-          onSubmit={register}>
+          <form action="" className="rounded-lg" onSubmit={register}>
             <h1
               className="font-extrabold
             text-xl
@@ -128,24 +77,26 @@ function RegisterPage() {
             <div className="main flex px-7 gap-7 mt-">
               <div
                 className="mainleft
-               w-1/2 
+               mx-auto 
                flex 
                flex-col
                h-full
-               gap-8
-               mt-6"
+               gap-6
+               mt-6
+               w-1/2
+               pl-16"
               >
-                <div>
+                <div className="w-full">
                   <input
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
                   px-4
-                  py-1
-                  text-[16px] "
+                  py-2
+                  text-[16px]
+                  w-full "
                     type="text"
-                    onChange={ev=>setFirstName(ev.target.value)}
+                    onChange={(ev) => setFirstName(ev.target.value)}
                     value={firstName}
                     // onChange={(e) => handleInputChange(e)}
                     id="firstName"
@@ -157,34 +108,42 @@ function RegisterPage() {
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
                   px-4
-                  py-1
-                  text-[16px] "
+                  py-2
+                  text-[16px]
+                  w-full "
                     type="text"
                     value={lastName}
-                    onChange={ev=>setLastName(ev.target.value)}
+                    onChange={(ev) => setLastName(ev.target.value)}
                     id="lastName"
                     placeholder="Last Name"
                   />
                 </div>
-                <div>
-                  <p
-                  className="
+                <div
+                  className="w-40 
+                h-20 
+                bg-gray-200
+                shadow-lg"
+                >
+                  <span
+                    className="
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
-                  py-1
+                  py-
                   w-full
                   text-[16px]
-                  text-gray-400"
-                  >Date of Birth</p>
+                  text-gray-400
+                  font-bold"
+                  >
+                    Date of Birth
+                  </span>
                   <input
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
                   py-1
                   w-full
@@ -195,7 +154,7 @@ function RegisterPage() {
                     type="date"
                     value={date}
                     id="date"
-                    onChange={ev=>setDate(ev.target.value)}
+                    onChange={(ev) => setDate(ev.target.value)}
                     ref={dateInputRef}
                   />
                 </div>
@@ -215,13 +174,13 @@ function RegisterPage() {
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
-                  py-1
+                  py-2
                   text-[16px] "
-                    type="email"
+                    type="text"
                     value={email}
-                    onChange={ev=>setEmail(ev.target.value)}
+                    onChange={(ev) => setEmail(ev.target.value)}
                     id="email"
                     placeholder="@gmail.com"
                   />
@@ -231,13 +190,13 @@ function RegisterPage() {
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
-                  py-1
+                  py-2
                   text-[16px] "
                     type="number"
                     value={phone}
-                    onChange={ev=>setPhone(ev.target.value)}
+                    onChange={(ev) => setPhone(ev.target.value)}
                     id="phone"
                     placeholder="Phone number"
                   />
@@ -247,13 +206,13 @@ function RegisterPage() {
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
-                  py-1
+                  py-2
                   text-[16px] "
                     type="password"
                     value={password}
-                    onChange={ev=>setPassword(ev.target.value)}
+                    onChange={(ev) => setPassword(ev.target.value)}
                     id="password"
                     placeholder="Password"
                   />
@@ -263,23 +222,22 @@ function RegisterPage() {
                     className="form_input
                   bg-gray-200
                   rounded-md
-                  text-lg
+                  
                   px-4
-                  py-1
+                  py-2
                   text-[16px] "
                     type="password"
                     value={confirmPassword}
-                    onChange={ev=>setConfirmPassword(ev.target.value)}
+                    onChange={(ev) => setConfirmPassword(ev.target.value)}
                     id="confirmPassword"
                     placeholder="Confirm Password"
                   />
                 </div>
               </div>
             </div>
-             {/* <div className="mt-1 "> */}
+            <div className="mt-1 ">
               <button
-                // onClick={() => handleSubmit()}
-                // type="submit"
+                type="submit"
                 onClick={register}
                 className="border-2 
                 rounded-lg
@@ -289,12 +247,13 @@ function RegisterPage() {
                 hover:bg-[#FFB984]
                 hover:text-white
                 bg-blue-300
-                w-3/4
-                mt-3"
+                w-4/5
+                mt-3
+                font-bold"
               >
                 Register
               </button>
-            {/* </div> */}
+            </div>
           </form>
         </div>
         <div

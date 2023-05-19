@@ -10,8 +10,7 @@ const User = require("./models/User");
 app.use(cors());
 app.use(express.json())
 
-// app.use('/api/cars/' , require('./routes/carsRoute'))
-// app.use('http://localhost:5000/api/users/', require('./routes/userRoute'))
+
 const  userRoute = require("./routes/usersRoute");
 const path = require('path');
 
@@ -27,19 +26,14 @@ mongoose
       
     }
   )
-  .then(() => console.log("connected to DB"))
+  .then(() => console.log("connected to Database"))
   .catch((err) => {
     console.error(err);
   });
 
-  // app.get('/', (req, res)=>{
-  //   res.send('HELLO_WORLD')
-  // })
 
- 
-
-app.listen(5000, () => {
-  console.log("on PORT 5000");
+app.listen(port, () => {
+  console.log("running on PORT 5000");
 });
 
 
